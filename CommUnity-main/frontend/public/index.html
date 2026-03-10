@@ -106,8 +106,40 @@ Earn Rewards
 
 <h2>Contact Us</h2>
 
-<div class="contact-box">
-Design here
+<div class="contact-layout">
+
+  <div class="contact-image">
+    <div class="contact-image-icon">📬</div>
+    <h3>Get in Touch</h3>
+    <p>Have questions or feedback?<br>We'd love to hear from you.</p>
+  </div>
+
+  <form class="contact-form" onsubmit="return false;">
+
+    <div>
+      <label for="contact-name">Full Name</label>
+      <input type="text" id="contact-name" placeholder="Enter your full name">
+    </div>
+
+    <div>
+      <label for="contact-email">Email Address</label>
+      <input type="email" id="contact-email" placeholder="Enter your email">
+    </div>
+
+    <div>
+      <label for="contact-subject">Subject</label>
+      <input type="text" id="contact-subject" placeholder="Enter subject">
+    </div>
+
+    <div>
+      <label for="contact-message">Message</label>
+      <textarea id="contact-message" placeholder="Write your message here..."></textarea>
+    </div>
+
+    <button type="submit" class="contact-submit">Send Message</button>
+
+  </form>
+
 </div>
 
 </section>
@@ -154,21 +186,19 @@ document.getElementById("navbar-placeholder").innerHTML = data;
 <!-- SCROLL FADE ANIMATION -->
 <script>
 
-window.addEventListener('scroll', function(){
-
-const elements = document.querySelectorAll('.fade-element');
-
-elements.forEach(function(element){
-
-const rect = element.getBoundingClientRect();
-
-if(rect.top < window.innerHeight && rect.bottom > 0){
-element.classList.add('fade-in');
+function checkFadeElements() {
+  const elements = document.querySelectorAll('.fade-element');
+  elements.forEach(function(element) {
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      element.classList.add('fade-in');
+    }
+  });
 }
 
-});
-
-});
+window.addEventListener('scroll', checkFadeElements);
+window.addEventListener('load', checkFadeElements);
+document.addEventListener('DOMContentLoaded', checkFadeElements);
 
 </script>
 
