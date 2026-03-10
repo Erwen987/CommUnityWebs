@@ -1,0 +1,114 @@
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background: linear-gradient(180deg, #0a224d, #2554a4);
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.brand-logo {
+  width: 40px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* MENU */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #B9DDFF;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.menu a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.menu a.active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+/* ICON */
+.menu-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.menu a.active .menu-icon,
+.menu a:hover .menu-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* LOGOUT */
+.logout {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.logout a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  background: #0F274D;
+  transition: 0.2s ease;
+}
+
+.logout a:hover {
+  background: #0B1F3D;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px;
+    padding: 18px;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .menu a span {
+    font-size: 12px;
+  }
+}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import OfficialSidebar from '../components/OfficialSidebar';
+import AdminSidebar from '../components/AdminSidebar';
 
-const OfficialsDashboard = () => {
+const AdminDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const [reports, setReports] = useState([]);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,8 +30,8 @@ const OfficialsDashboard = () => {
         .eq('auth_id', authUser.id)
         .single();
 
-      if (!profile || (profile.role !== 'official' && profile.role !== 'admin')) {
-        alert('Access denied. This dashboard is for officials only.');
+      if (!profile || profile.role !== 'admin') {
+        alert('Access denied. This dashboard is for admins only.');
         navigate('/');
         return;
       }
@@ -44,6 +45,12 @@ const OfficialsDashboard = () => {
 
   const loadData = async () => {
     try {
+      const { data: usersData } = await supabase
+        .from('users')
+        .select('*')
+        .order('created_at', { ascending: false });
+      setUsers(usersData || []);
+
       const { data: reportsData } = await supabase
         .from('reports')
         .select('*')
@@ -62,11 +69,6 @@ const OfficialsDashboard = () => {
     }
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/login');
-  };
-
   if (loading) {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
   }
@@ -74,20 +76,30 @@ const OfficialsDashboard = () => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#f0f2f5' }}>
       {/* SIDEBAR */}
-      <OfficialSidebar />
+      <AdminSidebar />
 
       {/* MAIN CONTENT */}
       <main style={{ marginLeft: '240px', flex: 1, padding: '30px' }}>
         {/* Header */}
         <div style={{ marginBottom: '30px' }}>
           <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#1e3a8a', margin: '0 0 10px 0' }}>
-            Hello, Barangay Officials 👋
+            Admin Dashboard 👋
           </h1>
-          <p style={{ color: '#666', margin: 0 }}>Here's what's happening in your barangay today.</p>
+          <p style={{ color: '#666', margin: 0 }}>Manage your barangay system.</p>
         </div>
 
         {/* Stats Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '30px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '30px' }}>
+          <div style={{
+            background: 'white',
+            padding: '25px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+          }}>
+            <h3 style={{ fontSize: '14px', color: '#666', margin: '0 0 10px 0' }}>Total Users</h3>
+            <p style={{ fontSize: '32px', fontWeight: 'bold', color: '#1e3a8a', margin: 0 }}>{users.length}</p>
+          </div>
+
           <div style={{
             background: 'white',
             padding: '25px',
@@ -109,91 +121,47 @@ const OfficialsDashboard = () => {
           </div>
         </div>
 
-        {/* Announcement Section */}
+        {/* Recent Users */}
         <div style={{
           background: 'white',
           padding: '25px',
           borderRadius: '12px',
           boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-          marginBottom: '30px'
+          marginBottom: '20px'
         }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 15px 0' }}>Barangay Announcement</h2>
-          <textarea
-            placeholder="Write an announcement for barangay residents..."
-            style={{
-              width: '100%',
-              minHeight: '100px',
-              padding: '12px',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              fontSize: '14px',
-              resize: 'vertical',
-              marginBottom: '15px'
-            }}
-          />
-          <button style={{
-            padding: '10px 24px',
-            background: '#1e3a8a',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '600'
-          }}>
-            Publish Announcement
-          </button>
-        </div>
-
-        {/* Monthly Reports and Requests */}
-        <div style={{
-          background: 'white',
-          padding: '25px',
-          borderRadius: '12px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
-        }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 20px 0' }}>Monthly Reports and Requests</h2>
+          <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 20px 0' }}>Recent Users</h2>
           
-          <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <input type="radio" name="view" defaultChecked />
-              <span>Requests</span>
-            </label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <input type="radio" name="view" />
-              <span>Reports</span>
-            </label>
-          </div>
-
-          {reports.length === 0 && requests.length === 0 ? (
-            <p style={{ textAlign: 'center', color: '#999', padding: '40px 0' }}>No available records yet.</p>
+          {users.length === 0 ? (
+            <p style={{ textAlign: 'center', color: '#999', padding: '40px 0' }}>No users yet.</p>
           ) : (
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ borderBottom: '2px solid #f0f0f0' }}>
-                    <th style={{ padding: '12px', textAlign: 'left', color: '#666', fontWeight: '600' }}>Title</th>
-                    <th style={{ padding: '12px', textAlign: 'left', color: '#666', fontWeight: '600' }}>Status</th>
-                    <th style={{ padding: '12px', textAlign: 'left', color: '#666', fontWeight: '600' }}>Date</th>
+                    <th style={{ padding: '12px', textAlign: 'left', color: '#666', fontWeight: '600' }}>Name</th>
+                    <th style={{ padding: '12px', textAlign: 'left', color: '#666', fontWeight: '600' }}>Email</th>
+                    <th style={{ padding: '12px', textAlign: 'left', color: '#666', fontWeight: '600' }}>Role</th>
+                    <th style={{ padding: '12px', textAlign: 'left', color: '#666', fontWeight: '600' }}>Date Joined</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {reports.slice(0, 5).map(report => (
-                    <tr key={report.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                      <td style={{ padding: '12px' }}>{report.title || 'Untitled'}</td>
+                  {users.slice(0, 10).map(user => (
+                    <tr key={user.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
+                      <td style={{ padding: '12px' }}>{user.first_name} {user.last_name}</td>
+                      <td style={{ padding: '12px' }}>{user.email}</td>
                       <td style={{ padding: '12px' }}>
                         <span style={{
                           padding: '4px 12px',
                           borderRadius: '12px',
-                          background: '#fef3c7',
-                          color: '#92400e',
+                          background: user.role === 'admin' ? '#dbeafe' : user.role === 'official' ? '#fef3c7' : '#e5e7eb',
+                          color: user.role === 'admin' ? '#1e40af' : user.role === 'official' ? '#92400e' : '#374151',
                           fontSize: '12px'
                         }}>
-                          {report.status || 'pending'}
+                          {user.role}
                         </span>
                       </td>
                       <td style={{ padding: '12px', color: '#666' }}>
-                        {report.created_at ? new Date(report.created_at).toLocaleDateString() : 'N/A'}
+                        {user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}
                       </td>
                     </tr>
                   ))}
@@ -203,20 +171,20 @@ const OfficialsDashboard = () => {
           )}
         </div>
 
-        {/* Top Community Contributors */}
+        {/* System Activity */}
         <div style={{
           background: 'white',
           padding: '25px',
           borderRadius: '12px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-          marginTop: '20px'
+          boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
         }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 15px 0' }}>Top Community Contributors</h2>
-          <p style={{ color: '#999' }}>No contributor records yet.</p>
+          <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 15px 0' }}>System Activity</h2>
+          <p style={{ color: '#666' }}>Recent reports: {reports.length}</p>
+          <p style={{ color: '#666' }}>Recent requests: {requests.length}</p>
         </div>
       </main>
     </div>
   );
 };
 
-export default OfficialsDashboard;
+export default AdminDashboard;

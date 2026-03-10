@@ -49,7 +49,9 @@ const Login = () => {
       alert(`Welcome back, ${userData.first_name} ${userData.last_name}!`);
 
       // Redirect based on role
-      if (userData.role === 'official' || userData.role === 'admin') {
+      if (userData.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (userData.role === 'official') {
         navigate('/dashboard');
       } else {
         navigate('/');

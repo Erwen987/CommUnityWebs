@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import TestConnection from './pages/TestConnection';
 import DebugLogin from './pages/DebugLogin';
 import OfficialsDashboard from './pages/OfficialsDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   useEffect(() => {
@@ -49,6 +50,7 @@ function App() {
           } />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<OfficialsDashboard />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/test" element={<TestConnection />} />
           <Route path="/debug" element={<DebugLogin />} />
         </Routes>
