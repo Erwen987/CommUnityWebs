@@ -48,8 +48,12 @@ const Login = () => {
       // Show success message
       alert(`Welcome back, ${userData.first_name} ${userData.last_name}!`);
 
-      // Redirect to home page
-      navigate('/');
+      // Redirect based on role
+      if (userData.role === 'official' || userData.role === 'admin') {
+        navigate('/dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (error) {
       console.error('Login error:', error);
       setError(error.message || 'Login failed. Please check your credentials.');
