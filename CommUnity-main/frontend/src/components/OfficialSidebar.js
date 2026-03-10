@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import './Sidebar.css';
 
@@ -25,30 +25,30 @@ const OfficialSidebar = () => {
       </div>
 
       <nav className="menu">
-        <a href="/dashboard" className={isActive('/dashboard')}>
+        <Link to="/dashboard" className={isActive('/dashboard')}>
           <img src="/icons/home.png" alt="Home" className="menu-icon" />
           <span>Home</span>
-        </a>
+        </Link>
 
-        <a href="/dashboard/reports" className={isActive('/dashboard/reports')}>
+        <Link to="/dashboard/reports" className={isActive('/dashboard/reports')}>
           <img src="/icons/reports.png" alt="Reports" className="menu-icon" />
           <span>Reports</span>
-        </a>
+        </Link>
 
-        <a href="/dashboard/requests" className={isActive('/dashboard/requests')}>
+        <Link to="/dashboard/requests" className={isActive('/dashboard/requests')}>
           <img src="/icons/requests.png" alt="Requests" className="menu-icon" />
           <span>Requests</span>
-        </a>
+        </Link>
 
-        <a href="/dashboard/analytics" className={isActive('/dashboard/analytics')}>
+        <Link to="/dashboard/analytics" className={isActive('/dashboard/analytics')}>
           <img src="/icons/analytics.png" alt="Analytics" className="menu-icon" />
           <span>Analytics</span>
-        </a>
+        </Link>
 
-        <a href="/dashboard/rewards" className={isActive('/dashboard/rewards')}>
+        <Link to="/dashboard/rewards" className={isActive('/dashboard/rewards')}>
           <img src="/icons/reward.png" alt="Reward" className="menu-icon" />
           <span>Reward</span>
-        </a>
+        </Link>
       </nav>
 
       <div className="logout">

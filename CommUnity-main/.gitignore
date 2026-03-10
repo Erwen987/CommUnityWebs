@@ -3,6 +3,9 @@ node_modules/
 frontend/node_modules/
 backend/vendor/
 
+# Backend (Laravel - No longer used, using Supabase directly)
+backend/
+
 # Build files
 frontend/build/
 backend/public/build/
@@ -28,3 +31,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Old HTML files (converted to React)
+frontend/public/*.html
+!frontend/public/index.html

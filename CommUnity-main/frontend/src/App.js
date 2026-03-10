@@ -14,6 +14,10 @@ import TestConnection from './pages/TestConnection';
 import DebugLogin from './pages/DebugLogin';
 import OfficialsDashboard from './pages/OfficialsDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import Reports from './pages/Reports';
+import Requests from './pages/Requests';
+import Rewards from './pages/Rewards';
+import UserManagement from './pages/UserManagement';
 
 function App() {
   useEffect(() => {
@@ -50,7 +54,14 @@ function App() {
           } />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<OfficialsDashboard />} />
+          <Route path="/dashboard/reports" element={<Reports />} />
+          <Route path="/dashboard/requests" element={<Requests />} />
+          <Route path="/dashboard/rewards" element={<Rewards />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<UserManagement />} />
+          <Route path="/admin/reports" element={<Reports />} />
+          <Route path="/admin/requests" element={<Requests />} />
+          <Route path="/admin/rewards" element={<Rewards />} />
           <Route path="/test" element={<TestConnection />} />
           <Route path="/debug" element={<DebugLogin />} />
         </Routes>
