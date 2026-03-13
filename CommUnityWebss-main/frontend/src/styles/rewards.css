@@ -1,0 +1,76 @@
+/* Rewards Styles */
+.reward-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.reward {
+  padding: 30px;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.reward:hover {
+  transform: translateY(-5px);
+}
+
+.reward.gold {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+
+.reward.green {
+  background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+}
+
+.reward.blue {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.reward.red {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.reward h3 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.contributors {
+  margin-top: 40px;
+}
+
+.leaderboard {
+  margin: 20px 0;
+}
+
+.leaderboard-item {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.view-all {
+  text-align: center;
+  padding: 15px;
+  color: #667eea;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.claims {
+  margin-top: 40px;
+}
+
+.claims ul {
+  list-style: none;
+  padding: 0;
+}
+
+.claims li {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
