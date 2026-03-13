@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
 import './index.css';
 
@@ -36,6 +37,15 @@ import RequestAdmin from './pages/RequestAdmin';
 import ReportAdmin from './pages/ReportAdmin';
 import UserManagement from './pages/UserManagement';
 
+// Redirects to /login if not authenticated; optionally restricts to admins only
+const ProtectedRoute = ({ children, adminOnly = false }) => {
+  const { user, profile, loading } = useAuth();
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
+  if (!user || !profile) return <Navigate to="/login" replace />;
+  if (adminOnly && profile.role !== 'admin') return <Navigate to="/dashboard" replace />;
+  return children;
+};
+
 function App() {
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +63,7 @@ function App() {
   }, []);
 
   return (
+    <AuthProvider>
     <Router>
       <div className="App">
         <Routes>
@@ -78,30 +89,31 @@ function App() {
           <Route path="/reset-code" element={<ResetCode />} />
           <Route path="/change-password" element={<ChangePassword />} />
 
-          {/* USER PAGES */}
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/request" element={<Request />} />
-          <Route path="/requests" element={<Request />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/reward" element={<Reward />} />
-          <Route path="/rewards" element={<Rewards />} />
-          <Route path="/analytic" element={<Analytic />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/settings" element={<Settings />} />
+          {/* USER PAGES (officials + admins) */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/request" element={<ProtectedRoute><Request /></ProtectedRoute>} />
+          <Route path="/requests" element={<ProtectedRoute><Request /></ProtectedRoute>} />
+          <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+          <Route path="/reward" element={<ProtectedRoute><Reward /></ProtectedRoute>} />
+          <Route path="/rewards" element={<ProtectedRoute><Rewards /></ProtectedRoute>} />
+          <Route path="/analytic" element={<ProtectedRoute><Analytic /></ProtectedRoute>} />
+          <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
 
-          {/* ADMIN PAGES */}
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/request-admin" element={<RequestAdmin />} />
-          <Route path="/admin/requests" element={<RequestAdmin />} />
-          <Route path="/report-admin" element={<ReportAdmin />} />
-          <Route path="/admin/reports" element={<ReportAdmin />} />
-          <Route path="/user-management" element={<UserManagement />} />
-          <Route path="/admin/users" element={<UserManagement />} />
+          {/* ADMIN PAGES (admins only) */}
+          <Route path="/admin" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin-dashboard" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/request-admin" element={<ProtectedRoute adminOnly><RequestAdmin /></ProtectedRoute>} />
+          <Route path="/admin/requests" element={<ProtectedRoute adminOnly><RequestAdmin /></ProtectedRoute>} />
+          <Route path="/report-admin" element={<ProtectedRoute adminOnly><ReportAdmin /></ProtectedRoute>} />
+          <Route path="/admin/reports" element={<ProtectedRoute adminOnly><ReportAdmin /></ProtectedRoute>} />
+          <Route path="/user-management" element={<ProtectedRoute adminOnly><UserManagement /></ProtectedRoute>} />
+          <Route path="/admin/users" element={<ProtectedRoute adminOnly><UserManagement /></ProtectedRoute>} />
         </Routes>
       </div>
     </Router>
+    </AuthProvider>
   );
 }
 

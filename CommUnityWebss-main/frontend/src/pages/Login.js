@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './login.css';
 
 const Login = () => {
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     emailOrPhone: '',
     password: ''
   });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,11 +21,22 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login attempt:', formData);
-    // You can add authentication logic, API calls, etc.
+    setError('');
+    setLoading(true);
+    try {
+      const { profile } = await signIn(formData.emailOrPhone, formData.password);
+      if (profile.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      setError(err.message || 'Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,7 +102,9 @@ const Login = () => {
 
                 <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
 
-                <button type="submit">LOGIN</button>
+                {error && <p style={{ color: 'red', fontSize: '0.85rem', marginBottom: '0.5rem' }}>{error}</p>}
+
+                <button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'LOGIN'}</button>
 
                 <p className="signup-text">
                   Don't have an account? <Link to="/signup">Sign up</Link>
