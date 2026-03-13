@@ -8,7 +8,7 @@
 }
 
 /* =========================
-   GLOBAL SCROLL
+   GLOBAL SCROLL FIX
 ========================= */
 html {
   scroll-behavior: smooth;
@@ -35,17 +35,16 @@ body {
 }
 
 /* =========================
-   HERO WRAPPER (IMAGE)
+   HERO WRAPPER
+   (background image applied via inline style in App.js)
 ========================= */
 .hero-wrapper {
   position: relative;
-  background-image: url("../public/images/Hero.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* Overlay (does not block scroll) */
 .hero-wrapper::before {
   content: "";
   position: absolute;
@@ -58,18 +57,20 @@ body {
    NAVIGATION
 ========================= */
 header {
-  padding: 20px 40px;
+  padding-left: 40px;
+  padding-right: 40px;
   position: relative;
   z-index: 1;
 }
 
 nav {
+  max-width: 100%;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* LOGO */
 .logo {
   display: flex;
   align-items: center;
@@ -92,7 +93,6 @@ nav {
   color: transparent;
 }
 
-/* NAV LINKS */
 .nav-links {
   list-style: none;
   display: flex;
@@ -124,7 +124,7 @@ nav {
 }
 
 /* =========================
-   HERO SECTION (LEFT-ALIGNED)
+   HERO SECTION
 ========================= */
 .hero-section {
   position: relative;
@@ -132,13 +132,12 @@ nav {
   padding: 120px 60px 140px;
   color: #eaf2ff;
   text-align: left;
-  max-width: 700px;
 }
 
 .hero-section h1 {
   font-size: 42px;
   font-weight: 700;
-  line-height: 1.25;
+  max-width: 600px;
 }
 
 .hero-section p {
@@ -155,34 +154,36 @@ nav {
   padding: 60px 20px;
   max-width: 900px;
   margin: auto;
-}
-
-/* Section titles centered */
-.section h2 {
-  font-size: 28px;
-  font-weight: 600;
   text-align: center;
 }
 
-/* Section descriptions left-aligned */
-.section p,
-.section-text {
-  max-width: 700px;
-  margin: 14px auto 0;
-  color: #4b5563;
-  text-align: left;
-}
-
-/* Light background sections */
 .section.light {
   background: #eaf1ff;
   border-radius: 20px;
   margin-top: 40px;
-  padding: 50px 30px;
+}
+
+.section h2 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.section-text {
+  font-size: 20px;
+  max-width: 300px;
+  margin-top: 70px;
+  margin-left: 10px;
+  color: #163364;
+  text-align: left;
+}
+
+.section-text .highlight {
+  font-weight: 900;
+  color: #163364;
 }
 
 /* =========================
-   CARDS (CENTERED TEXT)
+   CARDS
 ========================= */
 .card-row,
 .card-grid {
@@ -205,33 +206,93 @@ nav {
   border-radius: 16px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
   font-weight: 500;
-  text-align: center;
 }
 
 /* =========================
-   CONTACT
+   CONTACT SECTION
 ========================= */
-.contact-box {
-  height: 180px;
-  background: #ffffff;
-  border-radius: 16px;
+.contact-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 24px;
-  color: #9ca3af;
-  text-align: center;
+  gap: 60px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.contact-image img {
+  width: 320px;
+  max-width: 100%;
+}
+
+.contact-form {
+  width: 420px;
+  max-width: 100%;
+  text-align: left;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-form label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.contact-form textarea {
+  resize: none;
+}
+
+.contact-form button {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 999px;
+  border: none;
+  background: #7AB1F1;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background: #5e98d8;
 }
 
 /* =========================
-   FOOTER (CENTERED)
+   FOOTER / GET STARTED
+   (background image applied via inline style in Footer.js)
 ========================= */
 .get-started {
-  background: linear-gradient(135deg, #1e40af, #2563eb);
   color: #ffffff;
   padding: 60px 20px;
   text-align: center;
   margin-top: 80px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.get-started h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.get-started p {
+  margin-top: 10px;
+  font-size: 15px;
+  opacity: 0.9;
 }
 
 .footer-buttons {
@@ -242,37 +303,33 @@ nav {
 }
 
 .footer-btn {
-  background: #ffffff;
-  color: #2563eb;
+  background: #7AB1F1;
+  color: #ffffff;
   padding: 12px 30px;
   border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
 }
 
-.footer-btn.outline {
-  background: transparent;
-  border: 2px solid #ffffff;
+.footer-btn2 {
+  background: #7AB1F1;
   color: #ffffff;
+  padding: 12px 30px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 /* =========================
-   RESPONSIVE (MOBILE)
+   RESPONSIVE
 ========================= */
 @media (max-width: 768px) {
   .hero-section {
     padding: 100px 24px;
-    max-width: 100%;
-    text-align: center;
   }
 
   .hero-section h1 {
     font-size: 32px;
-  }
-
-  .hero-section p {
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .logo img {
@@ -292,8 +349,8 @@ nav {
     display: none;
   }
 
-  .section p,
-  .section-text {
+  .contact-container {
+    flex-direction: column;
     text-align: center;
   }
 }

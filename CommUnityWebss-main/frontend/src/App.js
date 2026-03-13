@@ -70,7 +70,7 @@ function App() {
           {/* HOME PAGE */}
           <Route path="/" element={
             <>
-              <div className="hero-wrapper">
+              <div className="hero-wrapper" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/Hero.png)` }}>
                 <Header />
                 <Hero />
               </div>

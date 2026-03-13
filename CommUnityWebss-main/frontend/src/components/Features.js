@@ -4,6 +4,7 @@ const Features = () => {
   return (
     <section id="features" className="section fade-element">
       <h2>Features</h2>
+      <p>Everything you need to report, track, and improve your community</p>
       <div className="card-grid">
         <div className="card">Report Issues</div>
         <div className="card">Request Assistance</div>
