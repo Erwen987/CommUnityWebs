@@ -1,0 +1,23 @@
+# Node
+node_modules/
+node-v20.11.1-win-x64/
+node.zip
+npm-debug.log*
+
+# React build output
+frontend/build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Laravel
+backend/.env
+backend/vendor/
+backend/storage/logs/*.log
+backend/bootstrap/cache/*.php
+
+# OS
+.DS_Store
+Thumbs.db
