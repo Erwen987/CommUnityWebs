@@ -23,7 +23,7 @@ body {
   color: #ffffff;
 
   /* ✅ CORRECT BACKGROUND IMAGE HANDLING */
-  background-image: url("../images/login.png");
+  background-image: url("../public/images/login.png");
   background-size: cover;          /* fills screen */
   background-position: center;     /* centered */
   background-repeat: no-repeat;    /* no tiling */

@@ -64,7 +64,7 @@ function App() {
 
   return (
     <AuthProvider>
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="App">
         <Routes>
           {/* HOME PAGE */}
@@ -81,6 +81,9 @@ function App() {
               <Footer />
             </>
           } />
+
+          {/* Redirect /index.html to / */}
+          <Route path="/index.html" element={<Navigate to="/" replace />} />
 
           {/* AUTH PAGES */}
           <Route path="/login" element={<Login />} />

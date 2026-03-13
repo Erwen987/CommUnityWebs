@@ -39,7 +39,7 @@ body {
 ========================= */
 .hero-wrapper {
   position: relative;
-  background-image: url("Hero.png");
+  background-image: url("../public/images/Hero.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -1,39 +1,41 @@
 import React, { useState } from 'react';
+import AdminSidebar from '../components/AdminSidebar';
+import Topbar from '../components/Topbar';
+import '../styles/sidebar.css';
 import '../styles/admin_dashboard.css';
 
 function AdminDashboard() {
-  const [stats] = useState({
-    reports: 0,
-    requests: 0,
-    users: 0,
-    activeUsers: 0
-  });
-
-  const [contributors, setContributors] = useState([]);
+  const [stats] = useState({ reports: 0, requests: 0, users: 0, activeUsers: 0 });
+  const [contributors] = useState([]);
+  const [activities] = useState([]);
 
   return (
     <div className="app">
+      <AdminSidebar />
       <main className="main">
+        <Topbar
+          title="Welcome Admin 👋"
+          description="Here's a quick overview of your barangay"
+          profileHref="/profile"
+        />
+
         {/* STATS */}
         <section className="stats">
           <div className="card stat">
             <span>Reports</span>
-            <strong id="reportsCount">{stats.reports}</strong>
+            <strong>{stats.reports}</strong>
           </div>
-
           <div className="card stat">
             <span>Requests</span>
-            <strong id="requestsCount">{stats.requests}</strong>
+            <strong>{stats.requests}</strong>
           </div>
-
           <div className="card stat">
             <span>Users</span>
-            <strong id="usersCount">{stats.users}</strong>
+            <strong>{stats.users}</strong>
           </div>
-
           <div className="card stat">
             <span>Active Users</span>
-            <strong id="activeUsersCount">{stats.activeUsers}</strong>
+            <strong>{stats.activeUsers}</strong>
           </div>
         </section>
 
@@ -41,22 +43,10 @@ function AdminDashboard() {
         <section className="content">
           <div className="card chart">
             <h3>Reports and Requests per Month</h3>
-
-            <div id="graphEmpty" className="empty-state">
+            <div className="empty-state">
               No records yet.<br />
               <small>Graph will appear once data is available.</small>
             </div>
-
-            <div className="bars" id="graphBars" style={{ display: 'none' }}>
-              {['Jan', 'Feb'].map((month) => (
-                <div className="bar-group" key={month}>
-                  <div className="bar requests"></div>
-                  <div className="bar reports"></div>
-                  <span>{month}</span>
-                </div>
-              ))}
-            </div>
-
             <div className="legend">
               <span><i className="req"></i> Requests</span>
               <span><i className="rep"></i> Reports</span>
@@ -66,13 +56,23 @@ function AdminDashboard() {
           <div className="right-column">
             <div className="card contributors">
               <h3>Top Contributors</h3>
-              <ul id="contributorsList">
+              <ul>
                 {contributors.length === 0 ? (
-                  <li>No contributors yet</li>
+                  <li className="empty">No contributors yet</li>
                 ) : (
-                  contributors.map((contrib, idx) => (
-                    <li key={idx}>{contrib.name} - {contrib.points} points</li>
+                  contributors.map((c, i) => (
+                    <li key={i}><span>{c.name}</span><strong>{c.points} pts</strong></li>
                   ))
+                )}
+              </ul>
+            </div>
+            <div className="card activities">
+              <h3>Recent Activities</h3>
+              <ul>
+                {activities.length === 0 ? (
+                  <li className="empty">No recent activities</li>
+                ) : (
+                  activities.map((a, i) => <li key={i}>{a}</li>)
                 )}
               </ul>
             </div>
